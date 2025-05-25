@@ -11,6 +11,8 @@ Este é um projeto modelo de um sistema bancário simples desenvolvido durante a
 ## 🧩 Funcionalidades
 
 - Criação de contas (corrente e poupança)
+- Gerenciamento de múltiplas contas
+- Conta bonificada (para cada saque efetuado, a conta desse tipo recebe **taxa adicional de 1%**) 
 - Depósito e saque
 - Consulta de saldo
 - Taxas de rendimento de conta poupança
@@ -20,3 +22,18 @@ Este é um projeto modelo de um sistema bancário simples desenvolvido durante a
 - Verificação de valor do saque
 - Verificação do valor de depósito
 - Caso o usuário insira um número que represente uma opção inválida, o sistema é interrompido imediatamente
+
+## 🏗️ Estrutura do Projeto
+
+```bash
+banco-orientado-a-objetos/
+│
+├── models/
+│   ├── Banco.java
+│   ├── Conta.java
+│   ├── ContaBonificada.java
+│   └── Poupanca.java
+├── view/
+│   └── Main.java
+│
+├── README.md
