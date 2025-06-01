@@ -12,7 +12,8 @@ Este é um projeto modelo de um sistema bancário simples desenvolvido durante a
 
 - Criação de contas (corrente e poupança)
 - Gerenciamento de múltiplas contas
-- Conta bonificada (para cada saque efetuado, a conta desse tipo recebe **taxa adicional de 1%**) 
+- Conta bonificada (para cada saque efetuado, a conta desse tipo recebe **taxa adicional de 5%**) 
+- Incrementar cashback/bonus (apenas contas do tipo Bonificada)
 - Depósito e saque
 - Consulta de saldo
 - Taxas de rendimento de conta poupança
