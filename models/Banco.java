@@ -3,18 +3,33 @@ public class Banco {
   private String nome;
   private Conta[] contas;
   
-  public Banco (String nomeBanco) {
+  public Banco (String nomeBanco, int tamanho) {
     nome = nomeBanco;
-    contas = new Conta[5];
+    contas = new Conta[tamanho];
+    double qtdEspeciais = contas.length * 0.3; // 30% da quantidade total de contas
     int i;
-    for (i = 0; i < 5; i++) {
-      if (i == 0) {
+    for (i = 0; i < contas.length; i++) {
+      if (i < qtdEspeciais) {             // cerca de 0 a 30% do total: eh ContaBonificada()
         contas[i] = new ContaBonificada();
-      } else if (i == 1) {
+      } else if (i < 2*qtdEspeciais) {      // cerca de 30% a 60% do total: eh Poupanca()
         contas[i] = new Poupanca();
-      } else {
+      } else {                            // restante: eh Conta()
         contas[i] = new Conta();
       }
+    }
+  }
+
+  public void criarConta (int id, int tipoConta) {
+    switch (tipoConta) {
+      case 2:
+        contas[id] = new ContaBonificada();
+        break;
+      case 3:
+        contas[id] = new Poupanca();
+        break;
+      default:
+        contas[id] = new Conta();
+        break;
     }
   }
 
