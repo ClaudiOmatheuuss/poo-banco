@@ -1,6 +1,6 @@
 package model;
 
-public class Poupanca extends Conta {
+final class Poupanca extends Conta {
   public Poupanca (int id) {
     super(id);
   }

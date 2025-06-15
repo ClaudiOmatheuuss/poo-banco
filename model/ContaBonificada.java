@@ -1,13 +1,13 @@
 package model;
-public class ContaBonificada extends Conta {
+final class ContaBonificada extends Conta {
   private double bonus;
 
   public ContaBonificada (int id) {
     super(id);
   }
 
+  @Override
   public boolean sacar (double valor) {
-
     if (valor > super.getSaldo()) {
       return false;
     } else {
