@@ -1,9 +1,10 @@
 package model;
 
+import exception.SemRendimentoException;
 import exception.ValorInvalidoException;
 
 final class ContaBonificada extends Conta {
-  private double bonus;
+  private double taxa;
 
   public ContaBonificada (int id, TipoConta tipoConta) {
     super(id, tipoConta);
@@ -14,15 +15,20 @@ final class ContaBonificada extends Conta {
     if (valor > super.getSaldo()) {
       throw new ValorInvalidoException(getSaldo());
     }
-    double taxa = valor * 0.1;
-    bonus += taxa;
+    double bonus = valor * 0.1;
+    taxa += bonus;
     super.sacar(valor);
     System.out.printf("Bônus atual: %f \n", bonus);
   }
 
-  public void incrementarBonus () {
+  public void incrementarBonus () throws SemRendimentoException {
+    if (taxa == 0) {
+      throw new SemRendimentoException(taxa);
+    }
     try {
-      super.depositar(bonus);
+      super.depositar(taxa);
+      taxa = 0;
     } catch (ValorInvalidoException e) {}
+
   }
 }

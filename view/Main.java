@@ -132,6 +132,8 @@ public class Main {
                 System.out.printf("Saldo atual: %f \n", banco.getSaldo(id));
               } catch (TipoIncorretoException e) {
                 System.out.println("A conta nao eh do tipo corrente bonificada, tente novamente!");
+              } catch (SemRendimentoException e) {
+                System.out.printf("Bonus atual: %.2f. Para obter esse beneficio voce deve realizar saques.\n", e.getTaxa());
               }
 
             } else if (opcaoEscolhida == 5) {
@@ -143,7 +145,9 @@ public class Main {
                 System.out.printf("Saldo atual: %f \n", banco.getSaldo(id));
               } catch (TipoIncorretoException e) {
                 System.out.println("A conta nao eh do tipo poupanca, tente novamente!");
-              }
+              } catch (SemRendimentoException e) {
+                System.out.println("Para aplicar os seus rendimentos voce deve ter saldo na conta.");
+              } catch (ValorInvalidoException e) {} // caso ignorado pois nunca acontece(taxaRendimento sempre é >= 0)
 
             } else if (opcaoEscolhida == 6) {
               banco.deletarConta(id);

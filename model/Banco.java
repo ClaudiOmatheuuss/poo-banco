@@ -44,22 +44,20 @@ public class Banco {
     contas[id].depositar(valor);
   }
 
-  public void incrementarBonus (int id) throws TipoIncorretoException {
-    if (contas[id] instanceof ContaBonificada) {
-      ContaBonificada c = (ContaBonificada) contas[id];
-      c.incrementarBonus();
-    } else {
+  public void incrementarBonus (int id) throws TipoIncorretoException, SemRendimentoException {
+    if (!(contas[id] instanceof ContaBonificada)) {
       throw new TipoIncorretoException();
     }
+    ContaBonificada c = (ContaBonificada) contas[id];
+    c.incrementarBonus();
   }
 
-  public void rendeConta (int id) throws TipoIncorretoException {
-    if (contas[id] instanceof Poupanca) {
-      Poupanca p = (Poupanca) contas[id];
-      p.rendeConta();
-    } else {
+  public void rendeConta (int id) throws TipoIncorretoException, SemRendimentoException, ValorInvalidoException {
+    if (!(contas[id] instanceof Poupanca)) {
       throw new TipoIncorretoException();
     }
+    Poupanca p = (Poupanca) contas[id];
+    p.rendeConta();
   }
 
   public void deletarConta (int id) {
