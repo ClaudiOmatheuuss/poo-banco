@@ -1,4 +1,7 @@
 package model;
+
+import exception.ValorInvalidoException;
+
 final class ContaBonificada extends Conta {
   private double bonus;
 
@@ -7,20 +10,19 @@ final class ContaBonificada extends Conta {
   }
 
   @Override
-  public boolean sacar (double valor) {
+  public void sacar (double valor) throws ValorInvalidoException {
     if (valor > super.getSaldo()) {
-      return false;
-    } else {
-      double taxa = valor * 0.1;
-      bonus += taxa;
-      super.sacar(valor);
-
-      System.out.printf("Bônus atual: %f \n", bonus);
-      return true;
+      throw new ValorInvalidoException(getSaldo());
     }
+    double taxa = valor * 0.1;
+    bonus += taxa;
+    super.sacar(valor);
+    System.out.printf("Bônus atual: %f \n", bonus);
   }
 
   public void incrementarBonus () {
-    super.depositar(bonus);
+    try {
+      super.depositar(bonus);
+    } catch (ValorInvalidoException e) {}
   }
 }

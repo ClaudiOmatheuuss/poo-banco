@@ -1,4 +1,5 @@
 package model;
+import exception.ValorInvalidoException;
 public class Conta {
   private double saldo;
   private int id;
@@ -10,22 +11,18 @@ public class Conta {
     this.tipoConta = tipoConta;
   }
 
-  public boolean sacar (double valor) {
-    if (valor > saldo) {
-      return false;
-    } else {
-      saldo -= valor;
-      return true;
-    }
+  public void sacar (double valor) throws ValorInvalidoException {
+    if (valor > saldo | valor <= 0) {
+      throw new ValorInvalidoException(saldo);
+    } 
+    saldo -= valor;
   }
   
-  public boolean depositar (double valor) {
+  public void depositar (double valor) throws ValorInvalidoException {
     if (valor <= 0) {
-      return false;
-    } else {
-      saldo += valor;
-      return true;
+      throw new ValorInvalidoException(saldo);
     }
+    saldo += valor;
   }
 
   public double getSaldo () {
@@ -33,6 +30,6 @@ public class Conta {
   }
 
   public String getContaInfo () {
-    return String.format("CONTA %s | ID: %d | Saldo: %.2f", this.tipoConta, this.id,  this.saldo);
+    return String.format("CONTA %s | ID: %d | Saldo: R$ %.2f", this.tipoConta, this.id,  this.saldo);
   }
 }

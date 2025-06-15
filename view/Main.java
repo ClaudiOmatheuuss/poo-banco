@@ -73,6 +73,8 @@ public class Main {
             tipo = TipoConta.POUPANCA;
           }
           try {
+            System.out.println("Conta criada com sucesso.\n");
+            System.out.println("Dados:");
             System.out.println(banco.criarConta(tipo));
           } catch (LimiteContasException e) {
             System.out.printf("Nao eh possivel criar mais contas(voce excedeu o limite de contas): %s contas \n", e.getTamanho());
@@ -89,55 +91,57 @@ public class Main {
             banco.validarConta(id);
           
             if (opcaoEscolhida == 1) { 
-              boolean saqueRealizado = false;
-              while (saqueRealizado == false) {
+              try {
                 System.out.println("_".repeat(40));
                 System.out.print("Insira o valor do saque: \n >> ");
                 double valor = scanner.nextDouble();
                 System.out.println("_".repeat(40));
-                saqueRealizado = banco.sacar(id, valor);
+                banco.sacar(id, valor);
+                System.out.println("Saque realizado!");
 
-                if (saqueRealizado == false) {
-                  System.out.println("DICA: Insira um valor menor ou igual ao seu saldo atual.");
-                  System.out.printf("Saldo: %s \n", banco.getSaldo(id));
-                } else {
-                  System.out.println("Saque realizado!");
-                }
+              } catch (ValorInvalidoException e) {
+                System.out.printf("Nao foi possivel realizar o saque, insira um valor maior que zero e menor ou igual ao seu saldo atual(R$ %.2f)\n.", e.getSaldo());
+                System.out.printf("Saldo: %s \n", banco.getSaldo(id));
               }
+              
             } else if (opcaoEscolhida == 2) { 
-              boolean depRealizado = false;
-              while (depRealizado == false) {
+
+              try {
                 System.out.println("_".repeat(40));
                 System.out.print("Insira o valor do deposito: \n >> ");
                 double valor = scanner.nextDouble();
                 System.out.println("_".repeat(40));
-                depRealizado = banco.depositar(id, valor);
-                if (depRealizado == false) {
-                  System.out.println("DICA: insira um valor maior que zero.");
-                } else {
-                  System.out.println("Deposito realizado!");
-                }
+                banco.depositar(id, valor);
+                System.out.println("Deposito realizado!");
+
+              } catch (ValorInvalidoException e) {
+                System.out.println("Nao foi possivel realizar o deposito, insira um valor maior que zero.");
               }
+
             } else if (opcaoEscolhida == 3) {
+
               System.out.println("_".repeat(40));
-              System.out.println(banco.getContaInfo(id));      
+              System.out.printf("Saldo: R$ %.2f \n", banco.getSaldo(id));      
+
             } else if (opcaoEscolhida == 4) {
               
-              if (banco.incrementarBonus(id)) {
+              try {
+                banco.incrementarBonus(id);
                 System.out.println("Bônus adicionado ao saldo da conta");
                 System.out.println("_".repeat(40));
                 System.out.printf("Saldo atual: %f \n", banco.getSaldo(id));
-                } else {
-                  System.out.println("A conta nao eh do tipo corrente bonificada, tente novamente!");
-                }
+              } catch (TipoIncorretoException e) {
+                System.out.println("A conta nao eh do tipo corrente bonificada, tente novamente!");
+              }
 
             } else if (opcaoEscolhida == 5) {
 
-              if (banco.rendeConta(id)) {
+              try {
+                banco.rendeConta(id);                
                 System.out.println("Rendimentos adicionados a conta");
                 System.out.println("_".repeat(40));
                 System.out.printf("Saldo atual: %f \n", banco.getSaldo(id));
-              } else {
+              } catch (TipoIncorretoException e) {
                 System.out.println("A conta nao eh do tipo poupanca, tente novamente!");
               }
 

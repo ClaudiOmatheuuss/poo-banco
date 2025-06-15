@@ -36,36 +36,43 @@ public class Banco {
     return getContaInfo(id);
   }
 
-  public boolean sacar (int id, double valor) {
-    return contas[id].sacar(valor);
+  public void sacar (int id, double valor) throws ValorInvalidoException {
+    contas[id].sacar(valor);
   }
 
-  public boolean depositar (int id, double valor) {
-    return contas[id].depositar(valor);
+  public void depositar (int id, double valor) throws ValorInvalidoException {
+    contas[id].depositar(valor);
   }
 
-  public boolean incrementarBonus (int id) {
+  public void incrementarBonus (int id) throws TipoIncorretoException {
     if (contas[id] instanceof ContaBonificada) {
       ContaBonificada c = (ContaBonificada) contas[id];
       c.incrementarBonus();
-      return true;
     } else {
-      return false;
+      throw new TipoIncorretoException();
     }
   }
 
-  public boolean rendeConta (int id) {
+  public void rendeConta (int id) throws TipoIncorretoException {
     if (contas[id] instanceof Poupanca) {
       Poupanca p = (Poupanca) contas[id];
       p.rendeConta();
-      return true;
     } else {
-      return false;
+      throw new TipoIncorretoException();
     }
   }
 
   public void deletarConta (int id) {
     contas[id] = null;
+  }
+  
+  public void validarConta (int id) throws ContaInexistenteException, IdInvalidoException {
+    if (id >= tamanho | id < 0) {
+      throw new IdInvalidoException(id, tamanho);
+    }
+    if (contas[id] == null) {
+      throw new ContaInexistenteException(id);
+    }
   }
 
   public double getSaldo (int id) {
@@ -74,15 +81,6 @@ public class Banco {
 
   public String getContaInfo (int id) {
     return contas[id].getContaInfo();
-  }
-
-  public void validarConta (int id) throws ContaInexistenteException, IdInvalidoException {
-    if (id >= tamanho | id < 0) {
-      throw new IdInvalidoException(id, tamanho);
-    }
-    if (contas[id] == null) {
-      throw new ContaInexistenteException(id);
-    }
   }
 
   public String getNome () {
