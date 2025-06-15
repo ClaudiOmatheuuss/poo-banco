@@ -27,6 +27,10 @@ public class Conta {
   }
 
   public double getSaldo () {
-    return saldo;
+    return this.saldo;
+  }
+
+  public String getContaInfo () {
+    return String.format("ID: %d | Saldo: %.2f", this.id, this.saldo);
   }
 }

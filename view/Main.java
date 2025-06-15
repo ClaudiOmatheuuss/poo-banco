@@ -30,7 +30,7 @@ public class Main {
     while (true) {
       TipoConta tipo;
       System.out.printf("_".repeat(40) + "\n Escolha conta desejada(0 a %d): \n >> ", tamanho - 1);
-      int contaSelecionada = scanner.nextInt();
+      int id = scanner.nextInt();
 
       exibirMenu();
       System.out.print("Insira o digito da opcao desejada: \n >> ");
@@ -47,7 +47,7 @@ public class Main {
         } else {
           tipo = TipoConta.POUPANCA;
         }
-        banco.criarConta(contaSelecionada, tipo); 
+        banco.criarConta(id, tipo); 
       } else if (opcaoEscolhida == 1) { 
         boolean saqueRealizado = false;
         while (saqueRealizado == false) {
@@ -55,11 +55,11 @@ public class Main {
           System.out.print("Insira o valor do saque: \n >> ");
           double valor = scanner.nextDouble();
           System.out.println("_".repeat(40));
-          saqueRealizado = banco.sacar(contaSelecionada, valor);
+          saqueRealizado = banco.sacar(id, valor);
 
           if (saqueRealizado == false) {
             System.out.println("DICA: Insira um valor menor ou igual ao seu saldo atual.");
-            System.out.printf("Saldo: %s \n", banco.getSaldo(contaSelecionada));
+            System.out.printf("Saldo: %s \n", banco.getSaldo(id));
           } else {
             System.out.println("Saque realizado!");
           }
@@ -71,7 +71,7 @@ public class Main {
           System.out.print("Insira o valor do deposito: \n >> ");
           double valor = scanner.nextDouble();
           System.out.println("_".repeat(40));
-          depRealizado = banco.depositar(contaSelecionada, valor);
+          depRealizado = banco.depositar(id, valor);
           if (depRealizado == false) {
             System.out.println("DICA: insira um valor maior que zero.");
           } else {
@@ -80,14 +80,13 @@ public class Main {
         }
       } else if (opcaoEscolhida == 3) {
         System.out.println("_".repeat(40));
-        System.out.printf("ID da conta: %d \n", contaSelecionada);
-        System.out.printf("O seu saldo eh: %f \n", banco.getSaldo(contaSelecionada));        
+        System.out.println(banco.getContaInfo(id));      
       } else if (opcaoEscolhida == 4) {
       
-        if (banco.incrementarBonus(contaSelecionada)) {
+        if (banco.incrementarBonus(id)) {
           System.out.println("Bônus adicionado ao saldo da conta");
           System.out.println("_".repeat(40));
-          System.out.printf("Saldo atual: %f \n", banco.getSaldo(contaSelecionada));
+          System.out.printf("Saldo atual: %f \n", banco.getSaldo(id));
         } else {
           System.out.println("A conta nao eh do tipo corrente bonificada, tente novamente!");
         }
@@ -95,10 +94,10 @@ public class Main {
 
       } else if (opcaoEscolhida == 5) {
 
-        if (banco.rendeConta(contaSelecionada)) {
+        if (banco.rendeConta(id)) {
           System.out.println("Rendimentos adicionados a conta");
           System.out.println("_".repeat(40));
-          System.out.printf("Saldo atual: %f \n", banco.getSaldo(contaSelecionada));
+          System.out.printf("Saldo atual: %f \n", banco.getSaldo(id));
         } else {
           System.out.println("A conta nao eh do tipo poupanca, tente novamente!");
         }
