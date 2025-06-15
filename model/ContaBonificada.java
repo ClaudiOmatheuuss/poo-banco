@@ -2,8 +2,8 @@ package model;
 final class ContaBonificada extends Conta {
   private double bonus;
 
-  public ContaBonificada (int id) {
-    super(id);
+  public ContaBonificada (int id, TipoConta tipoConta) {
+    super(id, tipoConta);
   }
 
   @Override

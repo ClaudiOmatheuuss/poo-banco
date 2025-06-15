@@ -1,8 +1,8 @@
 package model;
 
 final class Poupanca extends Conta {
-  public Poupanca (int id) {
-    super(id);
+  public Poupanca (int id, TipoConta tipoConta) {
+    super(id, tipoConta);
   }
 
   public void rendeConta () {

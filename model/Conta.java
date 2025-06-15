@@ -2,10 +2,12 @@ package model;
 public class Conta {
   private double saldo;
   private int id;
+  private TipoConta tipoConta;
 
-  public Conta(int id) {
+  public Conta(int id, TipoConta tipoConta) {
     saldo = 0;
     this.id = id;
+    this.tipoConta = tipoConta;
   }
 
   public boolean sacar (double valor) {
@@ -31,6 +33,6 @@ public class Conta {
   }
 
   public String getContaInfo () {
-    return String.format("ID: %d | Saldo: %.2f", this.id, this.saldo);
+    return String.format("CONTA %s | ID: %d | Saldo: %.2f", this.tipoConta, this.id,  this.saldo);
   }
 }

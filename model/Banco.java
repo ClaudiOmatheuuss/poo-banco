@@ -25,12 +25,12 @@ public class Banco {
       throw new LimiteContasException(tamanho);
     }
     
-    if(tipo == TipoConta.CONTA) {
-      contas[id] = new Conta(id);
-    } else if(tipo == TipoConta.CONTABONIFICADA) {
-      contas[id] = new ContaBonificada(id);
+    if(tipo == TipoConta.CORRENTE) {
+      contas[id] = new Conta(id, tipo);
+    } else if(tipo == TipoConta.CORRENTEBONIFICADA) {
+      contas[id] = new ContaBonificada(id, tipo);
     } else {
-      contas[id] = new Poupanca(id);
+      contas[id] = new Poupanca(id, tipo);
     }
     contadorContas += 1;
     return getContaInfo(id);
@@ -78,7 +78,7 @@ public class Banco {
 
   public void validarConta (int id) throws ContaInexistenteException, IdInvalidoException {
     if (id >= tamanho | id < 0) {
-      throw new IdInvalidoException(id);
+      throw new IdInvalidoException(id, tamanho);
     }
     if (contas[id] == null) {
       throw new ContaInexistenteException(id);

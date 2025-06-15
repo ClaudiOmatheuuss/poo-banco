@@ -66,9 +66,9 @@ public class Main {
           System.out.print("\n 1. conta corrente \n 2. conta corrente bonificada \n 3. conta poupanca \n>> ");
           int tipoEscolhido = scanner.nextInt();
           if (tipoEscolhido == 1) {
-            tipo = TipoConta.CONTA; 
+            tipo = TipoConta.CORRENTE; 
           } else if (tipoEscolhido == 2) {
-            tipo = TipoConta.CONTABONIFICADA;
+            tipo = TipoConta.CORRENTEBONIFICADA;
           } else {
             tipo = TipoConta.POUPANCA;
           }
@@ -148,7 +148,7 @@ public class Main {
           } catch (ContaInexistenteException e) {
             System.out.printf("Conta(id: %d) escolhida ainda nao existe, tente novamente.\n", e.getId());
           } catch (IdInvalidoException e) {
-            System.out.printf("id(%d) invalido! escolha um id positivo e de uma conta existente.\n", e.getId());
+            System.out.printf("id(%d) invalido! escolha um id positivo e menor que %s.\n", e.getId(), e.getTamanho());
           }
         }
       } else {

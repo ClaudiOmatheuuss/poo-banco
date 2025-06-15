@@ -1,7 +1,7 @@
 package model;
 
 public enum TipoConta {
-  CONTA,
-  CONTABONIFICADA,
+  CORRENTE,
+  CORRENTEBONIFICADA,
   POUPANCA
 }
