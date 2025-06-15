@@ -64,6 +64,10 @@ public class Banco {
     }
   }
 
+  public void deletarConta (int id) {
+    contas[id] = null;
+  }
+
   public double getSaldo (int id) {
     return contas[id].getSaldo();
   }
@@ -72,12 +76,13 @@ public class Banco {
     return contas[id].getContaInfo();
   }
 
-  public Conta getConta (int id) throws ContaInexistenteException {
-    Conta c = contas[id];
-    if (c == null) {
+  public void validarConta (int id) throws ContaInexistenteException, IdInvalidoException {
+    if (id >= tamanho | id < 0) {
+      throw new IdInvalidoException(id);
+    }
+    if (contas[id] == null) {
       throw new ContaInexistenteException(id);
     }
-    return c;
   }
 
   public String getNome () {

@@ -8,6 +8,16 @@ import model.TipoConta;
 
 public class Main {
 
+  public static boolean validaOpcao (int opcaoEscolhida) {
+    int[] opcoesValidas = new int[] {0, 1, 2, 3, 4, 5, 6, 7};
+    for (int i = 0; i < opcoesValidas.length; i++) {
+      if (opcaoEscolhida == opcoesValidas[i]) {
+        return true;
+      }
+    }
+    return false;
+  }
+
   public static void exibirMenu() {
     System.out.println("_".repeat(40));
     System.out.println(" Menu:");
@@ -17,6 +27,8 @@ public class Main {
     System.out.println("  3. Consultar saldo");
     System.out.println("  4. Incrementar cashback");
     System.out.println("  5. Render conta");
+    System.out.println("  6. Deletar conta");
+    System.out.println("  7. Sair do sistema");
     System.out.println("_".repeat(40));
   }
 
@@ -47,7 +59,8 @@ public class Main {
       exibirMenu();
         System.out.print("Insira o digito da opcao desejada: \n >> ");
         int opcaoEscolhida = scanner.nextInt();
-        
+
+      if (validaOpcao(opcaoEscolhida)) {
         if (opcaoEscolhida == 0) {
           System.out.println("Escolha o tipo de conta que deseja criar");
           System.out.print("\n 1. conta corrente \n 2. conta corrente bonificada \n 3. conta poupanca \n>> ");
@@ -65,12 +78,16 @@ public class Main {
             System.out.printf("Nao eh possivel criar mais contas(voce excedeu o limite de contas): %s contas \n", e.getTamanho());
           }
 
+        } else if (opcaoEscolhida == 7) {
+          scanner.close();
+          System.out.println("Encerrando o sistema...");
+          break;
         } else {
           System.out.printf("_".repeat(40) + "\n Escolha conta desejada(0 a %d): \n >> ", banco.getTamanho() - 1);
           int id = scanner.nextInt();
           try {
-            banco.getConta(id);
-        
+            banco.validarConta(id);
+          
             if (opcaoEscolhida == 1) { 
               boolean saqueRealizado = false;
               while (saqueRealizado == false) {
@@ -104,15 +121,15 @@ public class Main {
             } else if (opcaoEscolhida == 3) {
               System.out.println("_".repeat(40));
               System.out.println(banco.getContaInfo(id));      
-              } else if (opcaoEscolhida == 4) {
-            
-                if (banco.incrementarBonus(id)) {
+            } else if (opcaoEscolhida == 4) {
+              
+              if (banco.incrementarBonus(id)) {
                 System.out.println("Bônus adicionado ao saldo da conta");
                 System.out.println("_".repeat(40));
                 System.out.printf("Saldo atual: %f \n", banco.getSaldo(id));
-              } else {
-                System.out.println("A conta nao eh do tipo corrente bonificada, tente novamente!");
-              }
+                } else {
+                  System.out.println("A conta nao eh do tipo corrente bonificada, tente novamente!");
+                }
 
             } else if (opcaoEscolhida == 5) {
 
@@ -124,15 +141,19 @@ public class Main {
                 System.out.println("A conta nao eh do tipo poupanca, tente novamente!");
               }
 
-            } else {
-              System.out.println("Opcao invalida, reinicie o sistema e tente novamente.");
-              break;
+            } else if (opcaoEscolhida == 6) {
+              banco.deletarConta(id);
+              System.out.println("Conta apagada com sucesso.");
             }
           } catch (ContaInexistenteException e) {
-            System.out.printf("Conta(id: %d) escolhida ainda nao existe, tente novamente.", e.getId());
+            System.out.printf("Conta(id: %d) escolhida ainda nao existe, tente novamente.\n", e.getId());
+          } catch (IdInvalidoException e) {
+            System.out.printf("id(%d) invalido! escolha um id positivo e de uma conta existente.\n", e.getId());
           }
         }
+      } else {
+        System.out.println("Opcao invalida, tente novamente.");
       }
-    scanner.close();
+    }
   }
 }
