@@ -1,9 +1,11 @@
-package models;
+package model;
 public class Conta {
-  protected double saldo;
+  private double saldo;
+  private int id;
 
-  public Conta() {
+  public Conta(int id) {
     saldo = 0;
+    this.id = id;
   }
 
   public boolean sacar (double valor) {

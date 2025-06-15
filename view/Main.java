@@ -1,9 +1,11 @@
 package view;
 
 import java.util.Scanner;
-import models.Banco;
+import model.Banco;
+import model.TipoConta;
 
 public class Main {
+
   public static void exibirMenu() {
     System.out.println("_".repeat(40));
     System.out.println(" Menu:");
@@ -26,6 +28,7 @@ public class Main {
     System.out.printf("\n \n Bem vindo ao sistema do %s \n", banco.getNome());
 
     while (true) {
+      TipoConta tipo;
       System.out.printf("_".repeat(40) + "\n Escolha conta desejada(0 a %d): \n >> ", tamanho - 1);
       int contaSelecionada = scanner.nextInt();
 
@@ -37,7 +40,14 @@ public class Main {
         System.out.println("Escolha o tipo de conta que deseja criar");
         System.out.print("\n 1. conta corrente \n 2. conta corrente bonificada \n 3. conta poupanca \n>> ");
         int tipoEscolhido = scanner.nextInt();
-        banco.criarConta(contaSelecionada, tipoEscolhido); 
+        if (tipoEscolhido == 1) {
+          tipo = TipoConta.CONTA; 
+        } else if (tipoEscolhido == 2) {
+          tipo = TipoConta.CONTABONIFICADA;
+        } else {
+          tipo = TipoConta.POUPANCA;
+        }
+        banco.criarConta(contaSelecionada, tipo); 
       } else if (opcaoEscolhida == 1) { 
         boolean saqueRealizado = false;
         while (saqueRealizado == false) {
@@ -69,11 +79,11 @@ public class Main {
           }
         }
       } else if (opcaoEscolhida == 3) {
-
-        System.out.printf("O seu saldo eh: %f \n", banco.getSaldo(contaSelecionada));
-        
+        System.out.println("_".repeat(40));
+        System.out.printf("ID da conta: %d \n", contaSelecionada);
+        System.out.printf("O seu saldo eh: %f \n", banco.getSaldo(contaSelecionada));        
       } else if (opcaoEscolhida == 4) {
-
+      
         if (banco.incrementarBonus(contaSelecionada)) {
           System.out.println("Bônus adicionado ao saldo da conta");
           System.out.println("_".repeat(40));

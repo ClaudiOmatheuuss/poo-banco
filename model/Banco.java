@@ -1,36 +1,24 @@
-package models;
+package model;
 public class Banco {
   private String nome;
   private Conta[] contas;
+  private int contadorContas;
   
   public Banco (String nomeBanco, int tamanho) {
     nome = nomeBanco;
     contas = new Conta[tamanho];
-    double qtdEspeciais = contas.length * 0.3; // 30% da quantidade total de contas
-    int i;
-    for (i = 0; i < contas.length; i++) {
-      if (i < qtdEspeciais) {             // cerca de 0 a 30% do total: eh ContaBonificada()
-        contas[i] = new ContaBonificada();
-      } else if (i < 2*qtdEspeciais) {      // cerca de 30% a 60% do total: eh Poupanca()
-        contas[i] = new Poupanca();
-      } else {                            // restante: eh Conta()
-        contas[i] = new Conta();
-      }
-    }
+    contadorContas = 0;
   }
 
-  public void criarConta (int id, int tipoConta) {
-    switch (tipoConta) {
-      case 2:
-        contas[id] = new ContaBonificada();
-        break;
-      case 3:
-        contas[id] = new Poupanca();
-        break;
-      default:
-        contas[id] = new Conta();
-        break;
+  public void criarConta (int id, TipoConta tipo) {
+    if(tipo == TipoConta.CONTA) {
+      contas[id] = new Conta(id);
+    } else if(tipo == TipoConta.CONTABONIFICADA) {
+      contas[id] = new ContaBonificada(id);
+    } else {
+      contas[id] = new Poupanca(id);
     }
+    contadorContas += 1;
   }
 
   public boolean sacar (int contaSelecionada, double valor) {
